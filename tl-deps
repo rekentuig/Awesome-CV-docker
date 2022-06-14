@@ -1,5 +1,7 @@
 latexmk
+collection-langcjk
 collection-xetex
+ctex
 enumitem
 environ
 etoolbox

@@ -44,6 +44,6 @@ RUN mkdir --parents "$(kpsewhich -var-value=TEXMFHOME)/tex/latex/local" && \
 # Install fonts
 COPY ./fonts /fonts
 RUN mkdir /usr/share/fonts/truetype/Awesome-CV && \
-    cp /fonts/*.ttf /usr/share/fonts/truetype/Awesome-CV && \
+    cp /fonts/* /usr/share/fonts/truetype/Awesome-CV && \
     fc-cache --force --verbose && \
     rm --recursive --force /fonts
