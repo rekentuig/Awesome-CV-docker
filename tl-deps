@@ -1,4 +1,5 @@
 latexmk
+accsupp
 collection-langcjk
 collection-xetex
 ctex
@@ -7,6 +8,7 @@ environ
 etoolbox
 everysel
 filehook
+fontawesome6
 fontspec
 ifmtarg
 lm
