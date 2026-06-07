@@ -1,4 +1,4 @@
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 
 RUN apt-get update
 
@@ -6,7 +6,8 @@ RUN apt-get update
 # Set up TeX Live with dependencies.
 #
 
-RUN apt-get install --quiet --assume-yes wget build-essential fontconfig
+RUN apt-get install --quiet --assume-yes wget build-essential fontconfig \
+    fonts-roboto fonts-adobe-sourcesans3
 
 # Get the TeX Live installer and extract to /install-tl/.
 RUN wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz && \
@@ -22,6 +23,11 @@ RUN echo "selected_scheme scheme-basic" >> /install-tl/basic.profile && \
 # Install TeX Live.
 RUN /install-tl/install-tl -profile /install-tl/basic.profile && \
     rm --recursive --force /install-tl
+
+# For aarch64:
+# ENV PATH "/usr/local/texlive/installed/bin/aarch64-linux:${PATH}"
+
+# For x86-64:
 ENV PATH "/usr/local/texlive/installed/bin/x86_64-linux:${PATH}"
 
 # Install additional TeX Live dependencies.
@@ -38,7 +44,7 @@ RUN tlmgr install $(cat tl-deps) && \
 COPY ./awesome-cv /awesome-cv
 RUN mkdir --parents "$(kpsewhich -var-value=TEXMFHOME)/tex/latex/local" && \
     cp --target-directory="$(kpsewhich -var-value=TEXMFHOME)/tex/latex/local" \
-      awesome-cv/awesome-cv.cls awesome-cv/fontawesome.sty && \
+      awesome-cv/awesome-cv.cls && \
     rm --recursive --force /awesome-cv
 
 # Install fonts
